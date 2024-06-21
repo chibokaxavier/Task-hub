@@ -53,7 +53,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="bg-red-500">
+          <div >
             {tasks.map((task: TaskProps) => (
               <Task task={task} key={task._id.toString()} />
             ))}
