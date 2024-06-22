@@ -31,21 +31,21 @@ export default function Home() {
   return (
     <>
       <title>Task-Hub</title>
-      <main className="flex justify-center  mt-10 min-h-screen text-white">
+      <main className="flex justify-center  mt-10 min-h-screen">
         <div className="flex-col ">
           {" "}
-          <div className="bg-black h-fit w-fit mb-10 flex-col justify-center p-[60px]">
+          <div className=" shadow-2xl rounded-lg  w-[500px] mb-10 flex-col justify-center p-[40px]">
             <div>
-              <p className="text-center pb-4 text-2xl">Task Manager</p>
-              <div className="flex space-x-3">
+              <p className="text-center pb-4 text-xl">Task Manager</p>
+              <div className="flex ">
                 <input
                   type="text"
-                  className="outline-none border-0 text-black px-2"
+                  className="outline-none border-0 bg-gray-200 px-2 w-[400px]"
                   placeholder="e.g Wash dishes"
                 />{" "}
                 <button
                   type="submit"
-                  className="rounded-sm bg-blue-500 p-2 text-black font-bold"
+                  className="rounded-sm  bg-blue-500 px-2 py-1 text-white font-semibold"
                 >
                   {" "}
                   Submit
@@ -53,7 +53,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div >
+          <div>
             {tasks.map((task: TaskProps) => (
               <Task task={task} key={task._id.toString()} />
             ))}
