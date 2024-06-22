@@ -49,7 +49,7 @@ const Task: React.FC<Props> = ({ task }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="size-5"
+            className="size-5 cursor-pointer"
             onClick={deleteTask}
           >
             <path
