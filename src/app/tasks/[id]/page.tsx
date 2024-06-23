@@ -29,28 +29,33 @@ const page = ({ params }: { params: { id: string } }) => {
   }, [task]);
   return (
     <>
-      <div className="justify-center items-center flex">
-        <div className="bg-black h-fit w-fit mb-10 flex-col justify-center p-[60px]">
-          <div className="justify-center items-center ">
-            <p className=" text-white text-center pb-4 text-2xl">Edit Task</p>
-            <div className="flex space-x-3">
-              <input
-                type="text"
-                className="outline-none border-0 text-black px-2"
-                placeholder="e.g Wash dishes"
-              />{" "}
-              <button
-                type="submit"
-                className="rounded-sm bg-blue-500 p-2 text-black font-bold"
-              >
-                {" "}
-                Submit
-              </button>
-            </div>
+      <main className="flex justify-center items-center mt-10">
+        <div className="w-[500px] h-[350px] shadow-xl bg-white px-4 space-y-[30px] pb-10 ">
+          <p className="py-5 flex justify-center text-xl "> Edit task</p>
+          <div className="flex justify-between">
+            <p>Task ID</p>
+            <p>{task?._id}</p>
           </div>
+          <div className="flex justify-between">
+            <p>Name</p>
+            <input
+              type="text"
+
+              value={task?.name.toString()}
+              className="bg-gray-200 outline-none text-black w-[350px] px-4 border-none"
+            />
+          </div>
+          <div className="flex space-x-9">
+            <p>Completed</p>
+            <input type="checkbox" name="" id="" />
+          </div>
+        
+            <button className=" w-full py-2 bg-blue-700 text-white">
+              Submit
+            </button>
+          
         </div>
-        <div className="text-black">{task?.name}</div>
-      </div>
+      </main>
     </>
   );
 };
