@@ -1,5 +1,4 @@
 "use client";
-import { log } from "console";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Task from "../../components/Task";
@@ -13,6 +12,10 @@ type Props = {
 };
 export default function Home() {
   const [tasks, setTasks] = useState<TaskProps[]>([]);
+  const [input, setInput] = useState("");
+  const [name, setName] = useState("");
+  const [completed, setCompleted] = useState(false);
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -28,6 +31,31 @@ export default function Home() {
     };
     fetchTasks();
   }, []);
+  const createTask = async () => {
+    const newTask = {
+      name,
+      completed,
+    };
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+      if (!response.ok) {
+        const errorText = await response.text(); // Read the response body as text
+        throw new Error(
+          `HTTP error! status: ${response.status}, details: ${errorText}`
+        );
+      }
+      const data = await response.json(); // Parse the response body as JSON
+      console.log("Task created successfully:", data);
+    } catch (error) {
+      console.log("Error creating task:", error);
+    }
+  };
   return (
     <>
       <title>Task-Hub</title>
@@ -42,8 +70,11 @@ export default function Home() {
                   type="text"
                   className="outline-none border-0 bg-gray-200 px-2 w-[400px]"
                   placeholder="e.g Wash dishes"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />{" "}
                 <button
+                  onClick={createTask}
                   type="submit"
                   className="rounded-sm  bg-blue-500 px-2 py-1 text-white font-semibold"
                 >

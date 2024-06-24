@@ -1,14 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 type Task = {
   _id: String;
   name: String;
   completed: boolean;
 };
+
 const page = ({ params }: { params: { id: string } }) => {
   const [task, setTask] = useState<Task | null>(null);
   const [name, setName] = useState("");
   const [completed, setCompleted] = useState(false);
+  const notify = () => toast("Task updated successfully!");
+
   const updateTask = async () => {
     if (!task) {
       return;
@@ -29,6 +34,15 @@ const page = ({ params }: { params: { id: string } }) => {
           body: JSON.stringify(updatedTask),
         }
       );
+      if (!response.ok) {
+        const errorText = await response.text(); // Read the response body as text
+        throw new Error(
+          `HTTP error! status: ${response.status}, details: ${errorText}`
+        );
+      }
+      const data = await response.json(); // Parse the response body as JSON
+      notify();
+      console.log("Task updated successfully:", data);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +65,7 @@ const page = ({ params }: { params: { id: string } }) => {
       }
     };
     fetchTask();
-  }, []);
+  }, [params.id]);
   return (
     <>
       <main className="flex justify-center items-center mt-10">
@@ -88,6 +102,8 @@ const page = ({ params }: { params: { id: string } }) => {
             Submit
           </button>
         </div>
+
+        <ToastContainer />
       </main>
     </>
   );
