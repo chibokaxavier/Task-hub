@@ -7,20 +7,25 @@ type TaskProps = {
 };
 type Props = {
   task: TaskProps;
+  onDelete: () => void; // Add the onDelete prop
 };
-const Task: React.FC<Props> = ({ task }) => {
-  const deleteTask = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/api/v1/tasks/${task._id.toString()}`,
-        {
-          method: "DELETE",
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const Task: React.FC<Props> = ({ task, onDelete }) => {
+  //   const deleteTask = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:3001/api/v1/tasks/${task._id.toString()}`,
+  //         {
+  //           method: "DELETE",
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("network response wasnt ok");
+  //       }
+  //       const response2 = await fetch("http://localhost:3001/api/v1/tasks");
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
   return (
     <>
       <div className="shadow-xl rounded-[4px] my-4 flex justify-between items-center py-4 pl-10 pr-4">
@@ -50,7 +55,7 @@ const Task: React.FC<Props> = ({ task }) => {
             stroke-width="1.5"
             stroke="currentColor"
             className="size-5 cursor-pointer"
-            onClick={deleteTask}
+            onClick={onDelete}
           >
             <path
               stroke-linecap="round"

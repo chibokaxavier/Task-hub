@@ -1,7 +1,8 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import Task from "../../components/Task";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 type TaskProps = {
   _id: String;
   name: String;
@@ -15,6 +16,8 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [name, setName] = useState("");
   const [completed, setCompleted] = useState(false);
+  const createNotify = () => toast("Task created successfully!");
+  const deleteNotify = () => toast("Task deleted successfully!");
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -31,6 +34,21 @@ export default function Home() {
     };
     fetchTasks();
   }, []);
+  const deleteTask = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/tasks/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("network response wasnt ok");
+      }
+      setTasks(tasks.filter((task) => task._id !== id));
+      deleteNotify();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const createTask = async () => {
     const newTask = {
       name,
@@ -52,10 +70,14 @@ export default function Home() {
       }
       const data = await response.json(); // Parse the response body as JSON
       console.log("Task created successfully:", data);
+      tasks.push(data.task);
+      setName("");
+      createNotify();
     } catch (error) {
       console.log("Error creating task:", error);
     }
   };
+
   return (
     <>
       <title>Task-Hub</title>
@@ -86,10 +108,17 @@ export default function Home() {
           </div>
           <div>
             {tasks.map((task: TaskProps) => (
-              <Task task={task} key={task._id.toString()} />
+              <Task
+                task={task}
+                key={task._id as string}
+                onDelete={() => deleteTask(task._id as string)}
+              />
             ))}
           </div>
+         
         </div>
+
+        <ToastContainer />
       </main>
     </>
   );
