@@ -81,7 +81,7 @@ export default function Home() {
   return (
     <>
       <title>Task-Hub</title>
-      <main className="flex justify-center  mt-10 min-h-screen">
+      <main className="flex justify-center  mt-10 min-h-screen font-MyFont">
         <div className="flex-col ">
           {" "}
           <div className=" shadow-2xl rounded-lg  w-[500px] mb-10 flex-col justify-center p-[40px]">

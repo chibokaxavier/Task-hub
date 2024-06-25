@@ -10,6 +10,10 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      nunito: ["nunito", "sans-serif"],
+      MyFont: ['"Playwrite NG Modern", cursive', "serif"], // Ensure fonts with spaces have " " surrounding it.
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

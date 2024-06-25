@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -68,8 +69,8 @@ const page = ({ params }: { params: { id: string } }) => {
   }, [params.id]);
   return (
     <>
-      <main className="flex justify-center items-center mt-10">
-        <div className="w-[500px] h-[350px] shadow-xl bg-white px-4 space-y-[30px] pb-10 ">
+      <main className="flex justify-center items-center mt-10 font-MyFont   ">
+        <div className="w-[500px] h-[400px] shadow-xl bg-white px-4 space-y-[30px] pb-10 ">
           <p className="py-5 flex justify-center text-xl "> Edit task</p>
           <div className="flex justify-between">
             <p>Task ID</p>
@@ -101,6 +102,13 @@ const page = ({ params }: { params: { id: string } }) => {
           >
             Submit
           </button>
+          <Link href={"/"}>
+            <div className="flex justify-center items-center">
+              <button className="bg-gray-500 text-white px-2 rounded-md  mt-4 py-3">
+                Back to Homepage
+              </button>
+            </div>
+          </Link>
         </div>
 
         <ToastContainer />
