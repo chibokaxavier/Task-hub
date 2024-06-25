@@ -29,14 +29,14 @@ const Task: React.FC<Props> = ({ task, onDelete }) => {
   return (
     <>
       <div className="shadow-xl rounded-[4px] my-4 flex justify-between items-center py-4 pl-10 pr-4">
-        <p>{task.name}</p>
+        <p className={task.completed ? `line-through` : ""}> {task.name}</p>
         <div className="flex space-x-2">
           <Link href={`/tasks/${task._id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="size-5"
             >
@@ -52,7 +52,7 @@ const Task: React.FC<Props> = ({ task, onDelete }) => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
             className="size-5 cursor-pointer"
             onClick={onDelete}

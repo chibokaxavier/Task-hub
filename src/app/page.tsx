@@ -115,9 +115,7 @@ export default function Home() {
               />
             ))}
           </div>
-         
         </div>
-
         <ToastContainer />
       </main>
     </>
