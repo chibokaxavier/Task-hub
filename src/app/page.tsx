@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Task from "../../components/Task";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 type TaskProps = {
   _id: String;
   name: String;
@@ -16,8 +17,10 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [name, setName] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [user, setUser] = useState({});
   const createNotify = () => toast("Task created successfully!");
   const deleteNotify = () => toast("Task deleted successfully!");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -32,8 +35,45 @@ export default function Home() {
         console.log(error);
       }
     };
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/v1/employee/current",
+          {
+            method: "GET",
+            credentials: "include", // Include cookies in the request
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        console.log(result, "frontend");
+        setUser(result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchTasks();
+    fetchCurrentUser();
   }, []);
+  const logOut = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/v1/employee/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("network response wasnt ok");
+      }
+      router.push("/Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const deleteTask = async (id: string) => {
     try {
       const response = await fetch(`http://localhost:3001/api/v1/tasks/${id}`, {
@@ -77,6 +117,11 @@ export default function Home() {
       console.log("Error creating task:", error);
     }
   };
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(user, "user");
+    }, 5000);
+  }, []);
 
   return (
     <>
@@ -87,6 +132,7 @@ export default function Home() {
           <div className=" shadow-2xl rounded-lg  w-[500px] mb-10 flex-col justify-center p-[40px]">
             <div>
               <p className="text-center pb-4 text-xl">Task Manager</p>
+              {/* <button onClick={logOut}>Log out </button> */}
               <div className="flex ">
                 <input
                   type="text"
@@ -107,6 +153,7 @@ export default function Home() {
             </div>
           </div>
           <div>
+            {/* {user.userId} */}
             {tasks.map((task: TaskProps) => (
               <Task
                 task={task}

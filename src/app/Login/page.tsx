@@ -5,7 +5,7 @@ import EyeSlashed from "../../../components/EyeSlashed";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const signup = () => {
+const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,16 +15,20 @@ const signup = () => {
   const togglePassword = () => {
     setHidePassword(!hidePassword);
   };
-
+  
   const handleSubmit = (e: any) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/v1/employee", { name, email, password })
+      .post(
+        "http://localhost:3001/api/v1/employee/login",
+        { email, password },
+        { withCredentials: true }
+      )
       .then((result) => {
         console.log(result);
-        router.push("/Login");
+        router.push("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err, "not loggin in"));
   };
 
   return (
@@ -33,18 +37,9 @@ const signup = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4  ">
             <p className="font-bold text-3xl flex justify-center items-center pt-10">
-              Registration form
+              Log In
             </p>
             <div className="flex flex-col px-4 relative">
-              <label htmlFor="">Name</label>
-              <input
-                type="text"
-                name="name"
-                className="mb-5 w-[500px] p-4 border-[1px] outline-none "
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                required
-              />
               <label htmlFor="">Email</label>
               <input
                 type="email"
@@ -77,18 +72,9 @@ const signup = () => {
             </button>
           </div>
         </form>
-        <div className="flex justify-center items-center flex-col mt-10">
-          <p>Already have an account ?</p>
-          <button
-            className="bg-blue-200 py-4 px-2"
-            onClick={() => router.push("/Login")}
-          >
-            Login{" "}
-          </button>
-        </div>
       </div>
     </main>
   );
 };
 
-export default signup;
+export default Login;
