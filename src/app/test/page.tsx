@@ -50,8 +50,7 @@ const Page = () => {
             width={24}
             className="rounded-full"
           />
-          <span>  Add Member</span>
-        
+          <span> Add Member</span>
         </button>
       </div>
 
@@ -376,6 +375,19 @@ const Page = () => {
                   Remove member
                 </button>
               </div>
+            </div>
+            <div className="w-[271px] h-[244px] bg-[#1C1D1F]  flex flex-col gap-5 items-center justify-center rounded-[10px] ">
+              <div className="size-[51px] rounded-full flex items-center justify-center bg-[#00000040]/25">
+                <Image
+                  src="/cross.svg"
+                  alt="cross logo"
+                  height={23}
+                  width={23}
+                  className=""
+                />
+
+              </div>
+              <p className="text-[16px] font-semibold text-[#8E9BAE]">Add Member</p>
             </div>
           </div>
         )}
